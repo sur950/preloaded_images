@@ -15,4 +15,13 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Usage
 
-Simply add `https://github.com/sur950/preloaded_images` as a path to your flutter dependency.
+```
+
+Future<void> loadImageList() async {
+    List<String> allImage = List<String>();
+    List allImageTemp = await PreloadedImages.getImages(count: 5);
+    allImage.addAll(allImageTemp);
+  }
+  
+  
+```
