@@ -1,21 +1,21 @@
-// import 'package:flutter/services.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:preloaded_images/preloaded_images.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:preloaded_images/preloaded_images.dart';
 
-// void main() {
-//   const MethodChannel channel = MethodChannel('preloaded_images');
+void main() {
+  const MethodChannel channel = MethodChannel('preloaded_images');
 
-//   setUp(() {
-//     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-//       return '42';
-//     });
-//   });
+  setUp(() {
+    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+      return '3';
+    });
+  });
 
-//   tearDown(() {
-//     channel.setMockMethodCallHandler(null);
-//   });
+  tearDown(() {
+    channel.setMockMethodCallHandler(null);
+  });
 
-//   test('getPlatformVersion', () async {
-//     expect(await PreloadedImages.platformVersion, '42');
-//   });
-// }
+  test('getImages', () async {
+    expect(await PreloadedImages.getImages(count: 3), '3');
+  });
+}

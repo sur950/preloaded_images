@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:preloaded_images/preloaded_images.dart';
 
 void main() => runApp(MyApp());
@@ -39,8 +36,10 @@ class _MyAppState extends State<MyApp> {
             : Container(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  "${allImage.first}", // displaying only first image but will return you the count
-                  fit: Boxfit.contain,
+                  // displaying only first image
+                  // but will return you the count
+                  "${allImage.first}",
+                  fit: BoxFit.contain,
                 ),
               ),
       ),
