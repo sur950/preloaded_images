@@ -12,46 +12,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List images = [];
-  String errorMessage = "List is empty";
+  List allImage = List();
+  bool loading = true;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    getImages();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    List imgs;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      imgs = await PreloadedImages.getImages(count: 10);
-    } on PlatformException {
-      imgs = [];
-      errorMessage = "Something went wrong";
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
+  getImages() async {
+    allImage = [];
+    List allImageTemp = await PreloadedImages.getImages(count: 5);
+    allImage.addAll(allImageTemp);
+    print(allImage);
     setState(() {
-      images = imgs;
+      loading = false;
     });
   }
 
-  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-            // child: Text('Running on: $_platformVersion\n'),
-            ),
+    return Scaffold(
+      body: Center(
+        child: loading
+            ? CircularProgressIndicator()
+            : Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "${allImage.first}", // displaying only first image but will return you the count
+                  fit: Boxfit.contain,
+                ),
+              ),
       ),
     );
   }
