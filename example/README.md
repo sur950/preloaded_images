@@ -4,13 +4,55 @@ Demonstrates how to use the preloaded_images plugin.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+```
 
-A few resources to get you started if this is your first Flutter project:
+import 'package:flutter/material.dart';
+import 'package:preloaded_images/preloaded_images.dart';
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+void main() => runApp(MyApp());
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List allImage = List();
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getImages();
+  }
+
+  getImages() async {
+    allImage = [];
+    List allImageTemp = await PreloadedImages.getImages(count: 5);
+    allImage.addAll(allImageTemp);
+    print(allImage);
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: loading
+            ? CircularProgressIndicator()
+            : Container(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  // displaying only first image
+                  // but will return you the count
+                  "${allImage.first}",
+                  fit: BoxFit.contain,
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+```
