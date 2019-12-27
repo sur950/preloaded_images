@@ -114,7 +114,7 @@ public class PreloadedImagesPlugin implements MethodCallHandler {
           public void onPermissionDenied(PermissionDeniedResponse response) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setMessage("This permission is needed to fetch images from storage, Kindly click Allow.");
+            builder.setMessage("Allow app to access storage for fetching latest photos from your device?");
             builder.setTitle("Storage Permission Request");
             builder.setCancelable(false);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -125,7 +125,6 @@ public class PreloadedImagesPlugin implements MethodCallHandler {
                 Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
                 intent.setData(uri);
                 activity.startActivity(intent);
-
               }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -142,7 +141,7 @@ public class PreloadedImagesPlugin implements MethodCallHandler {
           public void onPermissionRationaleShouldBeShown(PermissionRequest permission, final PermissionToken token) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-            builder.setMessage("This permission is needed to fetch images from storage, Kindly click Allow.");
+            builder.setMessage("Allow app to access storage for fetching latest photos from your device?");
             builder.setTitle("Storage Permission Request");
             builder.setCancelable(false);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
