@@ -1,6 +1,6 @@
 name: preloaded_images
 description: A new flutter plugin to fetch latest 'X' images from mobile storage. It returns list of asset url's and works both on IOS and Android.
-version: 1.0.0
+version: 1.0.1
 
 author: Suresh Konakanchi <konakanchisuresh950@gmail.com>
 

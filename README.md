@@ -19,12 +19,18 @@ samples, guidance on mobile development, and a full API reference.
 
 Future<void> loadImageList() async {
     List<String> allImage = List<String>();
-    List allImageTemp = await PreloadedImages.getImages(count: 5);
+    List allImageTemp = await PreloadedImages.getImages(count: 5); // your custom count goes here
     allImage.addAll(allImageTemp);
   }
   
   
 ```
+
+### Note
+
+  IOS: As getting Path URL from PHAsset is asynchronous, the order may not be in sorted form but you will get latest 'X' number of images for sure.
+  
+  Android: You get images in sorted order.
 
 ### Preview
 ![grab-landing-page](https://github.com/sur950/preloaded_images/blob/master/image2.png)

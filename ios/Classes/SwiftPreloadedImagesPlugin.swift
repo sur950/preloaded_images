@@ -16,15 +16,13 @@ public class SwiftPreloadedImagesPlugin: NSObject, FlutterPlugin {
         else if (call.method == "getImages") {
             var latestImagesThreshold = 10 // count by default
             guard let args = call.arguments else {
-//                result([])
                 return
             }
             if let myArgs = args as? [String: Any],
                 let abc = myArgs["count"] as? Int {
                 latestImagesThreshold = abc
-            }else{
+            } else{
                 print("Something went wrong in fetching the count")
-//                result([])
             }
             
             DispatchQueue.main.async {
@@ -52,24 +50,29 @@ public class SwiftPreloadedImagesPlugin: NSObject, FlutterPlugin {
                     imgManager.requestImage(for: asset, targetSize: CGSize(width: 512.0, height: 512.0), contentMode: PHImageContentMode.aspectFit, options: PHImageRequestOptions(), resultHandler:{(image, info) in
                         
                         if image != nil {
-                            var imageData: Data?
-                            if let cgImage = image!.cgImage, cgImage.renderingIntent == .defaultIntent {
-                                imageData = image!.jpegData(compressionQuality: 0.8)
-                            }
-                            else {
-                                imageData = image!.pngData()
-                            }
-                            let guid = ProcessInfo.processInfo.globallyUniqueString;
-                            let tmpFile = String(format: "image_picker_%@.jpg", guid);
-                            let tmpDirectory = NSTemporaryDirectory();
-                            let tmpPath = (tmpDirectory as NSString).appendingPathComponent(tmpFile);
-                            if(FileManager.default.createFile(atPath: tmpPath, contents: imageData, attributes: [:])) {
-                                allImages.append(tmpPath)
-                            }
-                        }
-                        totalItration += 1
-                        if totalItration == (fetchResult.count) {
-                            result(allImages)
+
+                            asset.requestContentEditingInput(with: nil, completionHandler: { (input, dictInfo) in
+                                if let input = input {
+                                    let path = input.fullSizeImageURL?.absoluteString ?? ""
+                                    if path != "" {
+                                        allImages.append(path)
+                                        totalItration += 1
+                                        if totalItration == (fetchResult.count) {
+                                            var finalList = [String]()
+                                            for ind in 0..<allImages.count{
+                                                var newPath = ""
+                                                var pat = allImages[ind].split(separator: "/")
+                                                pat.remove(at: 0)
+                                                for i in 0..<pat.count{
+                                                    newPath.append("/"+pat[i])
+                                                }
+                                                finalList.append(newPath)
+                                            }
+                                            result(finalList)
+                                        }
+                                    }
+                                }
+                            })
                         }
                     })
                 }
