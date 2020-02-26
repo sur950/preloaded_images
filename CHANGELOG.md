@@ -1,3 +1,8 @@
+## 1.0.2
+
+* In 1.0.1, IOS is giving exact paths and it is not allowing to use this resource (while uploading into any storage buckets).
+* In 1.0.2, It will solve the above issue.
+
 ## 1.0.1
 
 * Added Support for GIF images in IOS (Earlier GIF images are converted to PNG)

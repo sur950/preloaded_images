@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'preloaded_images'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin to fetch latest 'X' images from the device storage.

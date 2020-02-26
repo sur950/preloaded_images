@@ -59,6 +59,15 @@ public class SwiftPreloadedImagesPlugin: NSObject, FlutterPlugin {
                                         totalItration += 1
                                         if totalItration == (fetchResult.count) {
                                             var finalList = [String]()
+                                            // for ind in 0..<allImages.count{
+                                            //     var newPath = ""
+                                            //     var pat = allImages[ind].split(separator: "/")
+                                            //     pat.remove(at: 0)
+                                            //     for i in 0..<pat.count{
+                                            //         newPath.append("/"+pat[i])
+                                            //     }
+                                            //     finalList.append(newPath)
+                                            // }
                                             for ind in 0..<allImages.count{
                                                 var newPath = ""
                                                 var pat = allImages[ind].split(separator: "/")
@@ -66,7 +75,15 @@ public class SwiftPreloadedImagesPlugin: NSObject, FlutterPlugin {
                                                 for i in 0..<pat.count{
                                                     newPath.append("/"+pat[i])
                                                 }
-                                                finalList.append(newPath)
+                                                let photoUrl = String(pat.last ?? "preloaded_images_%@.jpg")
+                                                let imageData: Data = try! Data(contentsOf: URL(fileURLWithPath: newPath))
+                                                let guid = ProcessInfo.processInfo.globallyUniqueString;
+                                                let tmpFile = String(format: photoUrl, guid);
+                                                let tmpDirectory = NSTemporaryDirectory();
+                                                let tmpPath = (tmpDirectory as NSString).appendingPathComponent(tmpFile);
+                                                if(FileManager.default.createFile(atPath: tmpPath, contents: imageData, attributes: [:])) {
+                                                    finalList.append(tmpPath)
+                                                }
                                             }
                                             result(finalList)
                                         }
